@@ -1,0 +1,327 @@
+================================================================
+  IT SHAHARCHA  —  Django darslari  —  64-dars
+  UY VAZIFASI: AMALIY TOPSHIRIQLAR
+  (Templates va render())
+================================================================
+
+
+KO'RSATMA:
+Quyidagi 10 ta topshiriqni Django loyihada bajaring. Har bir
+topshiriq uchun:
+
+  1. main/views.py da view funksiyasini yozing
+  2. main/templates/main/ ichida HTML template faylini yarating
+  3. Brauzerda tegishli URL'ni oching va natijani ko'ring
+
+URL'lar tayyor — main/urls.py'da ko'rib chiqing.
+
+ 
+BOSHLASH:
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py load_data
+    python manage.py runserver
+
+Brauzerda oching: http://127.0.0.1:8000/
+
+
+================================================================
+  TOPSHIRIQLAR RO'YXATI
+================================================================
+
+  1. Bosh sahifa                    →  /
+  2. Salom sahifasi (context)        →  /salom/
+  3. Muallif obyekti                 →  /muallif/
+  4. Kitoblar ro'yxati ({% for %})   →  /kitoblar/
+  5. Filtrlar                        →  /filtrlar/
+  6. {% if %} bilan shartlar          →  /shartlar/
+  7. URL parametri (muallif detali)  →  /muallif/1/
+  8. {% url %} tegi (kitob detali)    →  /kitob/1/
+  9. {% static %} (CSS bilan)         →  /static-test/
+ 10. {% extends %} bilan DRY          →  /home/ va /haqida/
+
+
+================================================================
+  1-TOPSHIRIQ.  Bosh sahifa
+================================================================
+
+URL: http://127.0.0.1:8000/
+
+VAZIFA:
+  • main/views.py da bosh_sahifa() funksiyasini yozing
+  • main/templates/main/bosh_sahifa.html ni yarating
+  • Sahifada <h1>Kutubxonaga xush kelibsiz!</h1> yozing
+
+VIEW NAMUNASI:
+    def salom_view(request):
+        return render(request, 'main/salom.html')
+
+TEMPLATE NAMUNASI:
+    <!DOCTYPE html>
+    <html>
+    <body>
+        <h1>Kutubxonaga xush kelibsiz!</h1>
+    </body>
+    </html>
+
+
+================================================================
+  2-TOPSHIRIQ.  Context bilan ma'lumot uzatish
+================================================================
+
+URL: http://127.0.0.1:8000/salom/
+
+VAZIFA:
+  • salom() view'da 'ism' o'zgaruvchisini context'ga qo'shing
+    (qiymati: 'Ali')
+  • salom.html template'da {{ ism }} bilan chiqaring
+
+VIEW NAMUNASI:
+    def salom_view(request):
+        kontekst = {'ism': 'Hasan'}
+        return render(request, 'main/salom.html', kontekst)
+
+TEMPLATE NAMUNASI:
+    <h1>Salom, {{ ism }}!</h1>
+
+
+================================================================
+  3-TOPSHIRIQ.  Obyektni context'da uzatish
+================================================================
+
+URL: http://127.0.0.1:8000/muallif/
+
+VAZIFA:
+  • muallif_view() da DB dan birinchi muallifni oling
+  • Template'da uning ma'lumotlarini chiqaring (nuqta orqali)
+
+VIEW NAMUNASI:
+    def kitob_view(request):
+        kitob = Kitob.objects.first()
+        return render(request, 'main/kitob.html', {'kitob': kitob})
+
+TEMPLATE NAMUNASI:
+    <h1>{{ muallif.ism_familiya }}</h1>
+    <p>Tug'ilgan yili: {{ muallif.tugilgan_yili }}</p>
+    <p>Shahar: {{ muallif.shahar }}</p>
+
+
+================================================================
+  4-TOPSHIRIQ.  Ro'yxat — {% for %} sikli
+================================================================
+
+URL: http://127.0.0.1:8000/kitoblar/
+
+VAZIFA:
+  • Barcha kitoblarni DB dan oling
+  • Template'da har birini <li> tegi bilan chiqaring
+  • Agar kitoblar yo'q bo'lsa, {% empty %} blokida xabar
+
+VIEW NAMUNASI:
+    def mualliflar_view(request):
+        mualliflar = Muallif.objects.all()
+        return render(request, 'main/mualliflar.html',
+                      {'mualliflar': mualliflar})
+
+TEMPLATE NAMUNASI:
+    <ul>
+      {% for m in mualliflar %}
+        <li>{{ m.ism_familiya }} ({{ m.tugilgan_yili }})</li>
+      {% empty %}
+        <li>Hech narsa yo'q</li>
+      {% endfor %}
+    </ul>
+
+
+================================================================
+  5-TOPSHIRIQ.  Filtrlar
+================================================================
+
+URL: http://127.0.0.1:8000/filtrlar/
+
+VAZIFA:
+  • View'dan template'ga uzating:
+      matn = 'salom dunyo'
+      son  = 5
+      ism  = ''       (bo'sh)
+  • Template'da quyidagi filtrlarni ishlatib ko'rsating:
+      - {{ matn|upper }}
+      - {{ matn|lower }}
+      - {{ matn|title }}
+      - {{ matn|length }}
+      - {{ son|add:10 }}
+      - {{ ism|default:"Mehmon" }}
+
+VIEW NAMUNASI:
+    def filter_test(request):
+        return render(request, 'main/test.html', {
+            'narx': 50000,
+            'sana': '2026-05-19'
+        })
+
+TEMPLATE NAMUNASI:
+    <p>{{ matn|upper }}</p>      <!-- SALOM DUNYO -->
+    <p>{{ son|add:10 }}</p>      <!-- 15 -->
+    <p>{{ ism|default:"Mehmon" }}</p>  <!-- Mehmon -->
+
+
+================================================================
+  6-TOPSHIRIQ.  {% if %} va {% for %} birga
+================================================================
+
+URL: http://127.0.0.1:8000/shartlar/
+
+VAZIFA:
+  • Barcha kitoblarni oling
+  • Har biri uchun:
+      - Agar mavjud=True bo'lsa — yashil rangda
+      - Agar mavjud=False bo'lsa — qizil rangda "Mavjud emas"
+
+TEMPLATE NAMUNASI:
+    {% for k in kitoblar %}
+      {% if k.mavjud %}
+        <p style="color: green">{{ k.nom }}</p>
+      {% else %}
+        <p style="color: red">{{ k.nom }} — Mavjud emas</p>
+      {% endif %}
+    {% endfor %}
+
+
+================================================================
+  7-TOPSHIRIQ.  URL parametri va bog'liq obyektlar
+================================================================
+
+URL: http://127.0.0.1:8000/muallif/1/
+
+VAZIFA:
+  • muallif_id URL'dan keladi
+  • get_object_or_404 bilan muallifni oling
+  • Template'da:
+      - Muallif ma'lumotlari
+      - Uning barcha kitoblari ({{ muallif.kitoblari.all }})
+
+VIEW NAMUNASI:
+    def kitob_detail(request, kitob_id):
+        kitob = get_object_or_404(Kitob, pk=kitob_id)
+        return render(request, 'main/detail.html', {'kitob': kitob})
+
+TEMPLATE NAMUNASI:
+    <h1>{{ muallif.ism_familiya }}</h1>
+    <h2>Kitoblari:</h2>
+    <ul>
+      {% for k in muallif.kitoblari.all %}
+        <li>{{ k.nom }} ({{ k.yil }})</li>
+      {% endfor %}
+    </ul>
+
+
+================================================================
+  8-TOPSHIRIQ.  {% url %} tegi bilan navigatsiya
+================================================================
+
+URL: http://127.0.0.1:8000/kitob/1/
+
+VAZIFA:
+  • kitob_id bo'yicha kitobni oling
+  • Template'da:
+      - Kitob ma'lumotlari
+      - {% url %} bilan muallif sahifasiga link
+      - Bosh sahifaga "Orqaga" tugmasi
+
+TEMPLATE NAMUNASI:
+    <h1>{{ kitob.nom }}</h1>
+    <p>Muallif:
+      <a href="{% url 'muallif_detail' kitob.muallif.id %}">
+        {{ kitob.muallif.ism_familiya }}
+      </a>
+    </p>
+    <a href="{% url 'bosh_sahifa' %}">← Orqaga</a>
+
+
+================================================================
+  9-TOPSHIRIQ.  {% static %} va CSS
+================================================================
+
+URL: http://127.0.0.1:8000/static-test/
+
+VAZIFA:
+  • Template'da {% load static %} qo'shing
+  • CSS faylni ulang:
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+  • Sahifada {{ sarlavha }} ni <h1> bilan chiqaring
+  • CSS ishlasa, h1 YASHIL rangda chiqadi
+
+ESLATMA: style.css fayli main/static/main/ da allaqachon yaratilgan.
+
+TEMPLATE NAMUNASI:
+    {% load static %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    </head>
+    <body>
+        <h1>{{ sarlavha }}</h1>
+    </body>
+    </html>
+
+
+================================================================
+ 10-TOPSHIRIQ.  {% extends %} va {% block %}
+================================================================
+
+URL: http://127.0.0.1:8000/home/
+URL: http://127.0.0.1:8000/haqida/
+
+VAZIFA:
+  3 ta template yarating (view'lar tayyor):
+
+  1. main/base.html — bazaviy shablon:
+     - <title>{% block sarlavha %}Kutubxona{% endblock %}</title>
+     - <nav> ichida link'lar
+     - <main>{% block kontent %}{% endblock %}</main>
+     - <footer>© 2026</footer>
+
+  2. main/home.html — base.html dan meros oladi
+  3. main/haqida.html — base.html dan meros oladi
+
+BASE.HTML NAMUNASI:
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>{% block sarlavha %}Kutubxona{% endblock %}</title>
+    </head>
+    <body>
+        <nav>
+            <a href="{% url 'home' %}">Bosh sahifa</a>
+            <a href="{% url 'haqida' %}">Biz haqimizda</a>
+        </nav>
+        <main>
+            {% block kontent %}{% endblock %}
+        </main>
+        <footer>© 2026 — Kutubxona</footer>
+    </body>
+    </html>
+
+HOME.HTML NAMUNASI:
+    {% extends 'main/base.html' %}
+
+    {% block sarlavha %}Bosh sahifa{% endblock %}
+
+    {% block kontent %}
+        <h1>Kutubxonaga xush kelibsiz!</h1>
+        <p>Bu yerda eng yaxshi kitoblar bor.</p>
+    {% endblock %}
+
+
+================================================================
+                         ✓ TUGADI
+================================================================
+
+VAZIFANI TOPSHIRISH:
+
+  1. 10 ta topshiriqning hammasini bajaring
+  2. Har bir URL'ni brauzerda tekshiring
+  3. savollar.txt fayliga javoblarni yozing
+  4. Loyihani GitHub'ga yuklang
+  5. GitHub link'ini o'qituvchiga yuboring

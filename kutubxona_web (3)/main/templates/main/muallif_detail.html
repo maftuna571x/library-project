@@ -1,0 +1,22 @@
+<div style="text-align:center;">
+
+    <h1>{{ muallif.ism_familiya }}</h1>
+
+    <p>Tug'ilgan yili: {{ muallif.tugilgan_yili }}</p>
+    <p>Shahar: {{ muallif.shahar }}</p>
+
+    <h2>Kitoblari</h2>
+
+    <ul style="list-style:none; padding:0;">
+        {% for kitob in muallif.kitoblari.all %}
+            <li>{{ kitob.nom }}</li>
+        {% empty %}
+            <li>Kitoblari mavjud emas</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+
+    <a href="{% url 'bosh_sahifa' %}">⬅ Back</a>
+
+</div>

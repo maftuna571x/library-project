@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block sarlavha %}Kutubxona{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+</head>
+<body>
+
+<div style="text-align:center;">
+
+    <nav>
+        <a href="{% url 'bosh_sahifa' %}">Bosh sahifa</a>
+        <a href="{% url 'haqida' %}">Haqida</a>
+    </nav>
+
+    <main>
+        {% block kontent %}{% endblock %}
+    </main>
+
+    <footer>
+        &copy; 2026 Kutubxona
+    </footer>
+
+</div>
+
+</body>
+</html>

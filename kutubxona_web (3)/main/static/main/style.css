@@ -1,0 +1,53 @@
+/* 9-topshiriq uchun namuna CSS fayli.
+   Agar {% static 'main/style.css' %} to'g'ri ishlasa,
+   <h1> tegi YASHIL rangda chiqadi va kulrang fon paydo bo'ladi. */
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #43A047;
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+p {
+    color: #2C3E50;
+    line-height: 1.6;
+}
+
+a {
+    color: #1E88E5;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+nav {
+    background-color: #0C4B33;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: white;
+    margin-right: 20px;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    color: #5A6C7D;
+    border-top: 1px solid #ddd;
+}

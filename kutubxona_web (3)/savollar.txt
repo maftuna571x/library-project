@@ -1,0 +1,107 @@
+================================================================
+  IT SHAHARCHA  —  Django darslari  —  64-dars
+  UY VAZIFASI: NAZARIY SAVOLLAR
+  (Templates va render())
+================================================================
+
+Talaba F.I.O: _________Jumaboyeva Maftuna____________
+Guruh:        __________DS2603______________
+Sana:         _____________5.31.2026__________________
+
+
+KO'RSATMA:
+Quyidagi savollarga shu faylda javob bering. Har bir savolning
+ostidagi "JAVOB:" qatoriga o'z so'zlaringiz bilan, qisqa (2-3
+jumla) yozing. Internetdan ko'chirib olmang.
+
+
+----------------------------------------------------------------
+SAVOL 1.
+Template (shablon) nima va Django'da u nima uchun kerak?
+O'z so'zlaringiz bilan tushuntiring.
+
+JAVOB:
+_____Django'da template fayl, foydalanuvchiga korinadigan html fayllar turadigan joy, 
+va u fayllar chalkashib ketmasligi uchun kerak, python kodi bilan html ni 
+              bu faylda html fayllar turadi._________
+
+
+
+----------------------------------------------------------------
+SAVOL 2.
+render() funksiyasi nima qiladi? U qanday 3 ta ishni bajaradi?
+
+JAVOB:
+______render views ni ichida turib html template ni oladi va
+unga biz yozgan python da yozgan malumotimizni qoshadi 
+keyin tayyor bolgan natijani brauzerga chiqarib beradi.__________
+
+
+----------------------------------------------------------------
+SAVOL 3.
+Context nima? View'dan template'ga ma'lumot qanday uzatiladi?
+
+JAVOB:
+________Context — view dan template ga yuboriladigan ozgaruvchilar.
+Malumot view ichida dictionary shaklida yoziladi va render buni template ga uzatadi.______
+
+
+
+----------------------------------------------------------------
+SAVOL 4.
+{{ }} va {% %} o'rtasidagi farq nima? Har biriga misol keltiring.
+
+JAVOB:
+_______{{}} bu template ni ichida malumotni chiqarish uchun ishlatiladi.
+{% %} buni ichiga python kodlari yoziladi _____________
+
+
+----------------------------------------------------------------
+SAVOL 5.
+Nima uchun template fayllarni books/templates/books/ ko'rinishida
+(ikki marta app nomi bilan) joylashtiramiz?
+
+JAVOB:
+______chalkashlik bo‘lmasligi
+ har bir app ozini template ga ega bolishi
+ loyiha tartibli bolishi uchun._______
+
+
+
+----------------------------------------------------------------
+SAVOL 6.
+{% extends %} va {% include %} o'rtasidagi farq nima?
+Har biri qachon ishlatiladi?
+
+JAVOB:
+________________________________________________________________
+________________________________________________________________
+________________________________________________________________
+
+
+----------------------------------------------------------------
+SAVOL 7.
+Quyidagi kod template'da nima qaytaradi va nima uchun?
+
+    {{ kitob.muallif.ism_familiya }}
+
+JAVOB:
+_______template kitob obyektini muallifini olib uning ismi va familiyasini qaytaradi._______
+
+
+----------------------------------------------------------------
+SAVOL 8.
+Filter nima? Quyidagi filtrlar nima qiladi:
+  |upper, |length, |default, |date
+
+JAVOB:
+________Filter—bu template da chiqayotgan malumotni shartga qarab ishlatadi filterlaydi.
+|upper — matnni hamma harflarini katta qilib chiqaradi
+|length — matn yoki royxatni uzunligini nechta ekanini korsatadi
+|default — agar qiymat bosh bolsa, orniga boshqa matn chiqaradi 
+|date — sanani chiroyli qilib chiqaradi _____
+
+
+================================================================
+                         ✓ TUGADI
+================================================================

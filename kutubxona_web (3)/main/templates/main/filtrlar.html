@@ -1,0 +1,18 @@
+<div style="text-align:center;">
+
+    <h1>Filtrlar bilan ishlash</h1>
+
+    <p>Upper: {{ matn|upper }}</p>
+    <p>Lower: {{ matn|lower }}</p>
+    <p>Title: {{ matn|title }}</p>
+    <p>Length: {{ matn|length }}</p>
+
+    <p>Son + 10: {{ son|add:10 }}</p>
+
+    <p>Ism: {{ ism|default:"Mehmon" }}</p>
+
+    <br>
+
+    <a href="{% url 'bosh_sahifa' %}">⬅ Back</a>
+
+</div>

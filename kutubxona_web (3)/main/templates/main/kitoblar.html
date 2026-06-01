@@ -1,0 +1,17 @@
+<div style="text-align:center;">
+
+    <h1>Kitoblar ro'yxati</h1>
+
+    <ul style="list-style:none; padding:0;">
+        {% for kitob in kitoblar %}
+            <li>{{ kitob.nom }}</li>
+        {% empty %}
+            <li>Kitoblar yo'q</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+
+    <a href="{% url 'bosh_sahifa' %}">⬅ Back</a>
+
+</div>

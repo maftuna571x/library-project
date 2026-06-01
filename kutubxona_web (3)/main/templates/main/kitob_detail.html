@@ -1,0 +1,19 @@
+<div style="text-align:center;">
+
+    <h1>{{ kitob.nom }}</h1>
+
+    <p>Yili: {{ kitob.yil }}</p>
+    <p>Narxi: {{ kitob.narx }}</p>
+
+    <p>
+        Muallif:
+        <a href="{% url 'muallif_detail' kitob.muallif.id %}">
+            {{ kitob.muallif.ism_familiya }}
+        </a>
+    </p>
+
+    <br>
+
+    <a href="{% url 'bosh_sahifa' %}">⬅ Back</a>
+
+</div>
