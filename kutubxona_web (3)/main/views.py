@@ -169,7 +169,7 @@ def filtrlar(request):
 #     {% endif %}
 #
 # NAMUNA — template:
-#   {% for k in kitoblar %}
+#   {% for k in kitoblar %}  
 #     {% if k.narx > 50000 %}
 #       <p style="color: red">{{ k.nom }} — qimmat</p>
 #     {% else %}

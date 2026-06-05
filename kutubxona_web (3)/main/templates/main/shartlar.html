@@ -1,17 +1,22 @@
-<div style="text-align:center;">
 
-    <h1>Kitoblar holati</h1>
+{% extends 'main/base.html' %}
 
-    {% for kitob in kitoblar %}
-        {% if kitob.mavjud %}
-            <p style="color: green">
-                {{ kitob.nom }} — Mavjud
-            </p>
-        {% else %}
-            <p style="color: red">
-                {{ kitob.nom }} — Mavjud emas
-            </p>
-        {% endif %}
-    {% endfor %}
+{% block sarlavha %}
+Shartlar
+{% endblock %}
 
-</div>
+{% block kontent %}
+<h1>Kitoblar holati</h1>
+
+{% for kitob in kitoblar %}
+    {% if kitob.mavjud %}
+        <p style="color: green">
+            {{ kitob.nom }}
+        </p>
+    {% else %}
+        <p style="color: red">
+            {{ kitob.nom }} — Mavjud emas
+        </p>
+    {% endif %}
+{% endfor %}
+{% endblock %}

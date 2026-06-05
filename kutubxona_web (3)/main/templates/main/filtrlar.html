@@ -1,18 +1,18 @@
-<div style="text-align:center;">
+{% extends 'main/base.html' %}
 
-    <h1>Filtrlar bilan ishlash</h1>
+{% block sarlavha %}
+Filtrlar
+{% endblock %}
 
-    <p>Upper: {{ matn|upper }}</p>
-    <p>Lower: {{ matn|lower }}</p>
-    <p>Title: {{ matn|title }}</p>
-    <p>Length: {{ matn|length }}</p>
+{% block kontent %}
+<h1>Template filtrlari</h1>
 
-    <p>Son + 10: {{ son|add:10 }}</p>
+<p>Upper: {{ matn|upper }}</p>
+<p>Lower: {{ matn|lower }}</p>
+<p>Title: {{ matn|title }}</p>
+<p>Length: {{ matn|length }}</p>
 
-    <p>Ism: {{ ism|default:"Mehmon" }}</p>
+<p>Add 10: {{ son|add:10 }}</p>
 
-    <br>
-
-    <a href="{% url 'bosh_sahifa' %}">⬅ Back</a>
-
-</div>
+<p>Default: {{ ism|default:"Mehmon" }}</p>
+{% endblock %}

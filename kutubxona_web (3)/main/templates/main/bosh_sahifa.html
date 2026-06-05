@@ -1,6 +1,14 @@
-<h1 style="text-align:center;">Kutubxonaga xush kelibsiz!</h1>
+{% extends 'main/base.html' %}
 
-<nav style="text-align:center;">
+{% block sarlavha %}
+Bosh sahifa
+{% endblock %}
+
+{% block kontent %}
+<h1>Kutubxonaga xush kelibsiz!</h1>
+{% endblock %}
+
+ <nav style="text-align:center;">
     <ul style="list-style:none; padding:0; display:inline-block;">
         <li><a href="{% url 'bosh_sahifa' %}">Bosh sahifa</a></li>
         <li><a href="{% url 'salom' %}">Salom</a></li>
